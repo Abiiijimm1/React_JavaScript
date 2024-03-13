@@ -1,0 +1,92 @@
+#App.js
+// App.js
+import React, { useState } from 'react';
+import Card from './card';
+import Modal from './modal';
+
+const App = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleCardClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  const handleModalClose = () => {
+    setSelectedImage(null);
+  };
+
+  const images = [
+    { fullSize: 'https://s.yimg.com/ny/api/res/1.2/Gh.CxMI3MW8_psC0OtcfvA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ4Mw--/https://s.yimg.com/os/creatr-uploaded-images/2021-06/c7f72840-ca20-11eb-bbf7-5fa0a7ca9de0', thumbnail: 'https://s.yimg.com/ny/api/res/1.2/Gh.CxMI3MW8_psC0OtcfvA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQ4Mw--/https://s.yimg.com/os/creatr-uploaded-images/2021-06/c7f72840-ca20-11eb-bbf7-5fa0a7ca9de0', name: 'Don gato', resolution: '1920x1080' },
+    { fullSize: 'https://i.pinimg.com/236x/3e/cb/62/3ecb629eaa47ab43f0bc2fe236ddb9bb.jpg', thumbnail: 'https://i.pinimg.com/236x/3e/cb/62/3ecb629eaa47ab43f0bc2fe236ddb9bb.jpg', name: 'Pitufos', resolution: 'Unknown' },
+    { fullSize: 'https://i.pinimg.com/236x/1e/8b/cd/1e8bcdf9d5ec0bfe1f791b7763686674.jpg', thumbnail: 'https://i.pinimg.com/236x/1e/8b/cd/1e8bcdf9d5ec0bfe1f791b7763686674.jpg', name: 'Benito', resolution: '800x600' },
+  ];
+
+  return (
+    <div>
+      <h1>React Cards</h1>
+      <div className="card-container">
+        {images.map((image, index) => (
+          <Card
+            key={index}
+            onClick={() => handleCardClick(image.fullSize)}
+            thumbnail={image.thumbnail}
+            name={image.name}
+            resolution={image.resolution}
+          />
+        ))}
+      </div>
+      {selectedImage && (
+        <Modal
+          image={selectedImage}
+          onClose={handleModalClose}
+        />
+      )}
+    </div>
+  );
+};
+
+export default App;
+---------------------------------------------------------------------------------------------------
+
+  #card.js
+
+  // Card.js
+import React from 'react';
+
+const Card = ({ onClick, thumbnail, name, resolution }) => {
+  return (
+    <div className="card" onClick={onClick}>
+      <div className="card-content">
+        <img src={thumbnail} alt="Thumbnail" className="thumbnail" />
+        <div className="card-details">
+          <p className="image-name">{name}</p>
+          <p className="image-resolution">{resolution}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Card;
+-----------------------------------------------------------------------------------------------
+
+  #modal.js
+
+  // Modal.js
+import React from 'react';
+
+const Modal = ({ image, onClose }) => {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content">
+        <button className="modal-button">
+          <img src={image} alt="Large Card" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Modal;
+
+  
